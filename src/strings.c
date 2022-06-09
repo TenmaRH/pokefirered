@@ -162,6 +162,7 @@ const u8 gUnknown_8416289[] = _("ポケナビ");
 const u8 gStartMenuText_Player[] = _("{PLAYER}");
 const u8 gStartMenuText_Save[] = _("SAVE");
 const u8 gStartMenuText_Option[] = _("OPTION");
+const u8 gStartMenuText_Coop[] = _("COOP");
 const u8 gStartMenuText_Exit[] = _("EXIT");
 const u8 gStartMenuText_Retire[] = _("RETIRE");
 const u8 gUnknown_84162A9[] = _("{STR_VAR_1}/{STR_VAR_2}\nBALLS  {STR_VAR_3}");
@@ -902,6 +903,7 @@ const u8 gStartMenuDesc_Bag[] = _("Equipped with pockets for storing items\nyou 
 const u8 gStartMenuDesc_Player[] = _("Check your money and other game data.");
 const u8 gStartMenuDesc_Save[] = _("Save your game with a complete record\nof your progress to take a break.");
 const u8 gStartMenuDesc_Option[] = _("Adjust various game settings such as text\nspeed, game rules, etc.");
+const u8 gStarMenuDesc_Coop[] = _("Enable multiplayer for 2 players.");
 const u8 gStartMenuDesc_Exit[] = _("Close this MENU window.");
 const u8 gStartMenuDesc_Retire[] = _("Retire from the SAFARI GAME and return to\nthe registration counter.");
 

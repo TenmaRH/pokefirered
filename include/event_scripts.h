@@ -1266,6 +1266,7 @@ extern const u8 CableClub_EventScript_DoLinkRoomExit[];
 extern const u8 CableClub_EventScript_TooBusyToNotice[];
 extern const u8 CableClub_EventScript_ReadTrainerCard[];
 extern const u8 CableClub_EventScript_ReadTrainerCardColored[];
+extern const u8 CableClub_EventScript_SelectBattleMode[]; //launch link stuff
 extern const u8 BattleColosseum_4P_EventScript_PlayerSpot0[];
 extern const u8 BattleColosseum_4P_EventScript_PlayerSpot1[];
 extern const u8 BattleColosseum_4P_EventScript_PlayerSpot2[];

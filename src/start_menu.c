@@ -87,6 +87,7 @@ static bool8 StartMenuOptionCallback(void);
 static bool8 StartMenuExitCallback(void);
 static bool8 StartMenuSafariZoneRetireCallback(void);
 static bool8 StartMenuLinkPlayerCallback(void);
+static bool8 StartMenuEnableCoop(void);
 static bool8 StartCB_Save1(void);
 static bool8 StartCB_Save2(void);
 static void StartMenu_PrepareForSave(void);
@@ -119,6 +120,7 @@ static const struct MenuAction sStartMenuActionTable[] = {
     { gStartMenuText_Player, {.u8_void = StartMenuPlayerCallback} },
     { gStartMenuText_Save, {.u8_void = StartMenuSaveCallback} },
     { gStartMenuText_Option, {.u8_void = StartMenuOptionCallback} },
+    { gStartMenuText_Coop, {.u8_void = StartMenuEnableCoop} },
     { gStartMenuText_Exit, {.u8_void = StartMenuExitCallback} },
     { gStartMenuText_Retire, {.u8_void = StartMenuSafariZoneRetireCallback} },
     { gStartMenuText_Player, {.u8_void = StartMenuLinkPlayerCallback} }
@@ -141,6 +143,7 @@ static const u8 *const sStartMenuDescPointers[] = {
     gStartMenuDesc_Player,
     gStartMenuDesc_Save,
     gStartMenuDesc_Option,
+    gStarMenuDesc_Coop,
     gStartMenuDesc_Exit,
     gStartMenuDesc_Retire,
     gStartMenuDesc_Player
@@ -440,7 +443,7 @@ static void StartMenu_FadeScreenIfLeavingOverworld(void)
 {
     if (sStartMenuCallback != StartMenuSaveCallback
      && sStartMenuCallback != StartMenuExitCallback
-     && sStartMenuCallback != StartMenuSafariZoneRetireCallback)
+     && sStartMenuCallback != StartMenuSafariZoneRetireCallback && sStartMenuCallback != StartMenuEnableCoop)
     {
         StopPokemonLeagueLightingEffectTask();
         FadeScreen(FADE_TO_BLACK, 0);
@@ -555,6 +558,12 @@ static bool8 StartMenuLinkPlayerCallback(void)
         return TRUE;
     }
     return FALSE;
+}
+
+static bool8 StartMenuEnableCoop(void)
+{
+    ScriptContext1_SetupScript(CableClub_EventScript_SelectBattleMode);
+    return TRUE;
 }
 
 static bool8 StartCB_Save1(void)
