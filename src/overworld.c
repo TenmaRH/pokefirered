@@ -50,6 +50,7 @@
 #include "constants/maps.h"
 #include "constants/region_map_sections.h"
 #include "constants/songs.h"
+#include "mgba.h"
 
 #define PLAYER_TRADING_STATE_IDLE 0x80
 #define PLAYER_TRADING_STATE_BUSY 0x81
@@ -2577,6 +2578,7 @@ static void CB1_UpdateLinkState(void)
     if (gWirelessCommType == 0 || !IsRfuRecvQueueEmpty() || !IsSendingKeysToLink())
     {
         u8 selfId = gLocalLinkPlayerId;
+        mgba_printf(MGBA_LOG_INFO, "%d", selfId);
         UpdateAllLinkPlayers(gLinkPartnersHeldKeys, selfId);
 
         // Note: Because guestId is between 0 and 4, while the smallest key code is

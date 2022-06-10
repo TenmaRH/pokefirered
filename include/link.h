@@ -276,7 +276,7 @@ void LocalLinkPlayerToBlock(void);
 void LinkPlayerFromBlock(u32 who);
 void SetLinkErrorFromRfu(u32 status, u8 lastSendQueueCount, u8 lastRecvQueueCount, u8 isConnectionError);
 u8 sub_800A8D4(void);
-void sub_800AA24(void);
+void ResetLinkPlayerCount(void);
 void sub_800A900(u8 a0);
 u8 sub_800A8A4(void);
 void sub_800A9A4(void);

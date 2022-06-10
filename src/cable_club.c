@@ -46,7 +46,7 @@ static void Task_ReestablishLinkInCableClubRoom_1(u8 taskId);
 static void Task_ReestablishLinkInCableClubRoom_Master(u8 taskId);
 static void Task_ReestablishLinkInCableClubRoom_2(u8 taskId);
 
-static const struct WindowTemplate gUnknown_83C6AB0 = {
+static const struct WindowTemplate sWindowTemplate_LinkPlayerCount = {
     .bg = 0,
     .tilemapLeft = 16,
     .tilemapTop = 11,
@@ -132,7 +132,7 @@ static bool32 sub_80808BC(u8 taskId)
     return FALSE;
 }
 
-static bool32 sub_80808F0(u8 taskId)
+static bool32 CheckLinkCancelledBeforeConnection(u8 taskId)
 {
     if (JOY_NEW(B_BUTTON) && !IsLinkConnectionEstablished())
     {
@@ -184,9 +184,9 @@ static void Task_Linkup0(u8 taskId)
     if (data[0] == 0)
     {
         OpenLinkTimed();
-        sub_800AA24();
+        ResetLinkPlayerCount();
         ResetLinkPlayers();
-        data[5] = AddWindow(&gUnknown_83C6AB0);
+        data[5] = AddWindow(&sWindowTemplate_LinkPlayerCount);
     }
     else if (data[0] > 9)
     {
@@ -198,11 +198,11 @@ static void Task_Linkup0(u8 taskId)
 static void Task_Linkup1(u8 taskId)
 {
     u8 linkPlayerCount = GetLinkPlayerCount_2();
-    if (sub_80808F0(taskId) != TRUE && sub_808093C(taskId) != TRUE && linkPlayerCount >= 2)
+    if (CheckLinkCancelledBeforeConnection(taskId) != TRUE && sub_808093C(taskId) != TRUE && linkPlayerCount >= 2)
     {
         SetSuppressLinkErrorMessage(TRUE);
         gTasks[taskId].data[3] = 0;
-        if (IsLinkMaster() == TRUE)
+        if (IsLinkMaster() == TRUE) //seems to always be player 1 in mgba
         {
             PlaySE(SE_PIN);
             ShowFieldAutoScrollMessage(CableClub_Text_WhenAllPlayersReadyAConfirmBCancel);
@@ -219,7 +219,7 @@ static void Task_Linkup1(u8 taskId)
 
 static void Task_LinkupMaster_2(u8 taskId)
 {
-    if (sub_80808F0(taskId) != TRUE && sub_8080990(taskId) != TRUE && sub_80808BC(taskId) != TRUE && !textbox_any_visible())
+    if (CheckLinkCancelledBeforeConnection(taskId) != TRUE && sub_8080990(taskId) != TRUE && sub_80808BC(taskId) != TRUE && !textbox_any_visible())
     {
         gTasks[taskId].data[3] = 0;
         gTasks[taskId].func = Task_LinkupMaster_3;
@@ -230,7 +230,7 @@ static void Task_LinkupMaster_3(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     s32 linkPlayerCount = GetLinkPlayerCount_2();
-    if (sub_80808F0(taskId) != TRUE && sub_8080990(taskId) != TRUE && sub_80808BC(taskId) != TRUE)
+    if (CheckLinkCancelledBeforeConnection(taskId) != TRUE && sub_8080990(taskId) != TRUE && sub_80808BC(taskId) != TRUE)
     {
         UpdateLinkPlayerCountDisplay(taskId, linkPlayerCount);
         if (JOY_NEW(A_BUTTON) && linkPlayerCount >= data[1])
@@ -246,7 +246,7 @@ static void Task_LinkupMaster_3(u8 taskId)
 
 static void Task_LinkupMaster_4(u8 taskId)
 {
-    if (sub_80808F0(taskId) != TRUE && sub_8080990(taskId) != TRUE && sub_80808BC(taskId) != TRUE && !textbox_any_visible())
+    if (CheckLinkCancelledBeforeConnection(taskId) != TRUE && sub_8080990(taskId) != TRUE && sub_80808BC(taskId) != TRUE && !textbox_any_visible())
     {
         if (GetSavedPlayerCount() != GetLinkPlayerCount_2())
         {
@@ -293,7 +293,7 @@ static void Task_LinkupSlave_2(u8 taskId)
     u8 lower = gTasks[taskId].data[1];
     u8 higher = gTasks[taskId].data[2];
     u16 *res;
-    if (sub_80808F0(taskId) != TRUE && sub_80808BC(taskId) != TRUE)
+    if (CheckLinkCancelledBeforeConnection(taskId) != TRUE && sub_80808BC(taskId) != TRUE)
     {
         res = &gSpecialVar_Result;
         *res = sub_8080844(lower, higher);

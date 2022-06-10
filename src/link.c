@@ -169,7 +169,7 @@ static const struct BlockRequest sBlockRequests[] = {
     {gBlockSendBuffer, 220},
     {gBlockSendBuffer,  40}
 };
-static const char sASCIIGameFreakInc[] = "GameFreak inc.";
+static const char sASCIIGameFreakInc[] = "JameFreak inc.";
 static const char sASCIITestPrint[] = "TEST PRINT\n"
                                "P0\n"
                                "P1\n"
@@ -736,7 +736,7 @@ static void LinkCB_SendHeldKeys(void)
 {
     if (gReceivedRemoteLinkPlayers == TRUE)
     {
-        BuildSendCmd(LINKCMD_SEND_HELD_KEYS_2);
+        BuildSendCmd(LINKCMD_SEND_HELD_KEYS);
     }
 }
 
@@ -1280,7 +1280,7 @@ void sub_800A9A4(void)
     }
 }
 
-void sub_800AA24(void)
+void ResetLinkPlayerCount(void)
 {
     gSavedLinkPlayerCount = 0;
     gSavedMultiplayerId = 0;
