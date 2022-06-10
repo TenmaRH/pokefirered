@@ -1221,7 +1221,7 @@ u8 sub_800A8D4(void)
     return flags;
 }
 
-void sub_800A900(u8 a0)
+void sub_800A900(u8 a0) // SaveLinkData(u8 playerCount)
 {
     int i;
 

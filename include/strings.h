@@ -1550,4 +1550,8 @@ extern const u8 gText_PokeSum_EggOrigin_NicePlace[];
 extern const u8 gText_PokeSum_EggOrigin_Spa[];
 extern const u8 gText_PokeSum_EggOrigin_Trade[];
 
+// coop multiplayer
+extern const u8 gText_WaitCoopMultiPlayer[];
+extern const u8 gText_StartCoopMultiPlayer[];
+
 #endif //GUARD_STRINGS_H

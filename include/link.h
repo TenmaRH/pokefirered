@@ -82,6 +82,7 @@
 #define LINKTYPE_0x3322              0x3322
 #define LINKTYPE_BERRY_BLENDER_SETUP              0x4411
 #define LINKTYPE_CONTEST_GMODE              0x6601
+#define LINKTYPE_COOP                0X0002
 
 #define MASTER_HANDSHAKE 0x8FFF
 #define SLAVE_HANDSHAKE  0xB9A0

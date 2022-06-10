@@ -34,6 +34,7 @@
 #include "option_menu.h"
 #include "save_menu_util.h"
 #include "help_system.h"
+#include "multiplayer.h"
 #include "constants/songs.h"
 #include "constants/field_weather.h"
 
@@ -215,8 +216,8 @@ static void SetUpStartMenu_NormalField(void)
     AppendToStartMenuItems(STARTMENU_BAG);
     AppendToStartMenuItems(STARTMENU_PLAYER);
     AppendToStartMenuItems(STARTMENU_SAVE);
+    AppendToStartMenuItems(STARTMENU_COOP);
     AppendToStartMenuItems(STARTMENU_OPTION);
-    AppendToStartMenuItems(STARTMENU_EXIT);
 }
 
 static void SetUpStartMenu_SafariZone(void)
@@ -563,7 +564,10 @@ static bool8 StartMenuLinkPlayerCallback(void)
 
 static bool8 StartMenuEnableCoop(void)
 {
-    ScriptContext1_SetupScript(CableClub_EventScript_SelectBattleMode);
+    ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
+    RemoveStartMenuWindow();
+    DestroyHelpMessageWindow(0);
+    CreateTask(Task_CoopLinkupStart, 80);
     return TRUE;
 }
 

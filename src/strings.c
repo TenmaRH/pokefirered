@@ -1335,3 +1335,7 @@ const u8 gText_Receive[] = _("RECEIVE");
 const u8 gText_Send[] = _("SEND");
 const u8 gText_Toss[] = _("TOSS");
 const u8 gUnknown_841EE2B[] = _("DEL. ALL{CLEAR_TO 0x57}CANCEL{CLEAR_TO 0xA4}OK");
+
+// coop multiplayer
+const u8 gText_WaitCoopMultiPlayer[] = _("Waiting for other player...\nPress B to abort.");
+const u8 gText_StartCoopMultiPlayer[] = _("Press A to start.");
