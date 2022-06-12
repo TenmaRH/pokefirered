@@ -35,6 +35,7 @@
 #include "save_menu_util.h"
 #include "help_system.h"
 #include "multiplayer.h"
+#include "field_message_box.h"
 #include "constants/songs.h"
 #include "constants/field_weather.h"
 
@@ -567,7 +568,8 @@ static bool8 StartMenuEnableCoop(void)
     ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
     RemoveStartMenuWindow();
     DestroyHelpMessageWindow(0);
-    CreateTask(Task_CoopLinkupStart, 80);
+    ShowFieldAutoScrollMessage(gText_WaitCoopMultiPlayer);
+    CreateTask(Task_CoopStart, 80);
     return TRUE;
 }
 

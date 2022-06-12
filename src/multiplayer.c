@@ -14,15 +14,22 @@
 static const u8 StringGameCode[] = _("DUMMY");
 static const u8 gText_Congrats[] = _("Congrats!!!"); // test
 
-static void Task_CoopLinkupAwaitConnection(u8 taskId);
+static void Task_CoopLinkupStart(u8 taskId);
 static void Task_CoopMasterAwaitSlave(u8 taskId);
 static void Task_CoopMasterConfirm(u8 taskId);
-static void Task_CoopMasterSuccess(u8 taskId);
-static void Task_CoopSlaveAwaitMaster(u8 taskId);
+static void Task_CoopAwaitPartnerReady(u8 taskId);
 static void LinkSuccess();
 static void LinkAbort();
 
-void Task_CoopLinkupStart(u8 taskId)
+// esperamos a que salga todo el mensaje antes de empezar la conexion
+void Task_CoopStart(u8 taskId)
+{
+    if (textbox_any_visible() == 0) // if (GetFieldMessageBoxMode() == FIELD_MESSAGE_BOX_HIDDEN)
+        gTasks[taskId].func = Task_CoopLinkupStart;
+}
+
+// iniciamos conexion
+static void Task_CoopLinkupStart(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     if (data[0] == 0)
@@ -34,90 +41,48 @@ void Task_CoopLinkupStart(u8 taskId)
     }
     else if (data[0] > 9)
     {
-        gTasks[taskId].func = Task_CoopLinkupAwaitConnection;
+        gTasks[taskId].func = IsLinkMaster() ? Task_CoopMasterAwaitSlave : Task_CoopAwaitPartnerReady;
     }
     data[0]++;
 }
 
-static void Task_CoopLinkupAwaitConnection(u8 taskId)
-{
-    ShowFieldAutoScrollMessage(gText_WaitCoopMultiPlayer);
-    if (IsLinkMaster())
-        gTasks[taskId].func = Task_CoopMasterAwaitSlave;
-    else
-        gTasks[taskId].func = Task_CoopSlaveAwaitMaster;
-}
-
+// 1P espera a que 2P ya haya iniciado conexion
 static void Task_CoopMasterAwaitSlave(u8 taskId)
 {
-    s16 *data = gTasks[taskId].data;
-    s32 linkPlayerCount = GetLinkPlayerCount_2();
-
-    if (textbox_any_visible() == 0) // if (GetFieldMessageBoxMode() == FIELD_MESSAGE_BOX_HIDDEN)
+    if (JOY_NEW(B_BUTTON))
+    {         
+        LinkAbort();
+        DestroyTask(taskId);
+    }
+    else if (GetLinkPlayerCount_2() == COOP_PLAYERS)
     {
-        if (gMain.heldKeys & B_BUTTON)
-        {         
-            LinkAbort();
-            DestroyTask(taskId);
-        }
-        if (linkPlayerCount != COOP_PLAYERS)
-        {
-            return;
-        }
         ShowFieldAutoScrollMessage(gText_StartCoopMultiPlayer);
         gTasks[taskId].func = Task_CoopMasterConfirm;
     }
 }
 
+// 2P ya se ha conectado, 1P debe pulsar A para empezar
 static void Task_CoopMasterConfirm(u8 taskId)
 {
-    if (textbox_any_visible() == 0) // if (GetFieldMessageBoxMode() == FIELD_MESSAGE_BOX_HIDDEN)
+    if (textbox_any_visible() == 0 && JOY_NEW(A_BUTTON)) // if (GetFieldMessageBoxMode() == FIELD_MESSAGE_BOX_HIDDEN && JOY_NEW(A_BUTTON))
     {
-        if (gMain.heldKeys & A_BUTTON)
-        {
-            CheckShouldAdvanceLinkState();
-            gTasks[taskId].func = Task_CoopMasterSuccess;
-        }
+        CheckShouldAdvanceLinkState();
+        gTasks[taskId].func = Task_CoopAwaitPartnerReady;
     }
 }
 
-static void Task_CoopMasterSuccess(u8 taskId)
+// 2P espera a que 1P este listo, 1P siempre llega el ultimo
+static void Task_CoopAwaitPartnerReady(u8 taskId)
 {
-    gSpecialVar_Result = GetLinkPlayerDataExchangeStatusTimed(COOP_PLAYERS, COOP_PLAYERS);
-    if (gMain.heldKeys & B_BUTTON) // ???
-    {
-        LinkAbort();
-        DestroyTask(taskId);
-    }
-    else if (gSpecialVar_Result == 1) // LINKUP_SUCCESS
+    if (GetLinkPlayerDataExchangeStatusTimed(COOP_PLAYERS, COOP_PLAYERS) == EXCHANGE_COMPLETE) // LINKUP_SUCCESS
     {
         LinkSuccess();
         DestroyTask(taskId);
     }
-}
-
-static void Task_CoopSlaveAwaitMaster(u8 taskId)
-{
-    if (textbox_any_visible() == 0) // if (GetFieldMessageBoxMode() == FIELD_MESSAGE_BOX_HIDDEN) // esto no se si esta bien...
+    else if (JOY_NEW(B_BUTTON))
     {
-        if (gMain.heldKeys & B_BUTTON)
-        {
-            LinkAbort();
-            DestroyTask(taskId);
-        }
-        else 
-        {
-            gSpecialVar_Result = GetLinkPlayerDataExchangeStatusTimed(COOP_PLAYERS, COOP_PLAYERS);
-            if (gSpecialVar_Result == 0) // LINKUP_ONGOING
-            {
-                return;
-            }
-            else if (gSpecialVar_Result == 1) // LINKUP_SUCCESS
-            {
-                LinkSuccess();
-                DestroyTask(taskId);
-            }
-        }
+        LinkAbort();
+        DestroyTask(taskId);
     }
 }
 

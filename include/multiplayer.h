@@ -5,6 +5,6 @@
 
 #define COOP_PLAYERS 2
 
-void Task_CoopLinkupStart(u8 taskId);
+void Task_CoopStart(u8 taskId);
 
 #endif // GUARD_MULTIPLAYER_H
