@@ -65,7 +65,6 @@
 #define LINKCMD_INIT_BLOCK         0xBBBB
 #define LINKCMD_SEND_HELD_KEYS_2   0xCAFE
 #define LINKCMD_0xCCCC             0xCCCC
-#define LINKCMD_RNG                0xB33F
 
 #define LINKTYPE_TRADE              0x1111  // trade
 #define LINKTYPE_0x1122              0x1122  // trade
@@ -285,6 +284,5 @@ void sub_800A9A4(void);
 void SetLocalLinkPlayerId(u8 playerId);
 bool32 IsSendingKeysToLink(void);
 u32 GetLinkRecvQueueLength(void);
-void BuildSendCmd(u16 command);
 
 #endif // GUARD_LINK_H

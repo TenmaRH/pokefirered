@@ -20,7 +20,6 @@ static void Task_CoopMasterConfirm(u8 taskId);
 static void Task_CoopAwaitPartnerReady(u8 taskId);
 static void LinkSuccess();
 static void LinkAbort();
-static void TransferRng();
 
 // esperamos a que salga todo el mensaje antes de empezar la conexion
 void Task_CoopStart(u8 taskId)
@@ -114,12 +113,5 @@ static void LinkAbort()
     CloseLink();
 }
 
-static void TransferRng()
-{
-    if (IsLinkMaster() == TRUE)
-    {
-        BuildSendCmd(LINKCMD_RNG);
-    }
-}
 
 
