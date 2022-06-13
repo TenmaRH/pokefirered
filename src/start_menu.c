@@ -577,6 +577,9 @@ static bool8 StartMenuEnableCoop(void)
     }
     else
     {
+        ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
+        RemoveStartMenuWindow();
+        DestroyHelpMessageWindow(0);
         ScriptContext1_SetupScript(Coop_EventScript_SelectAction);
         return TRUE;
     }
