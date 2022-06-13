@@ -238,6 +238,7 @@ static void SetUpStartMenu_Link(void)
     AppendToStartMenuItems(STARTMENU_BAG);
     AppendToStartMenuItems(STARTMENU_PLAYER2);
     AppendToStartMenuItems(STARTMENU_OPTION);
+    AppendToStartMenuItems(STARTMENU_COOP);
     AppendToStartMenuItems(STARTMENU_EXIT);
 }
 
@@ -565,12 +566,21 @@ static bool8 StartMenuLinkPlayerCallback(void)
 
 static bool8 StartMenuEnableCoop(void)
 {
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
-    RemoveStartMenuWindow();
-    DestroyHelpMessageWindow(0);
-    ShowFieldAutoScrollMessage(gText_WaitCoopMultiPlayer);
-    CreateTask(Task_CoopStart, 80);
-    return TRUE;
+    if (IsLinkConnectionEstablished() == FALSE)
+    {
+        ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
+        RemoveStartMenuWindow();
+        DestroyHelpMessageWindow(0);
+        ShowFieldAutoScrollMessage(gText_WaitCoopMultiPlayer);
+        CreateTask(Task_CoopStart, 80);
+        return TRUE;
+    }
+    else
+    {
+        ScriptContext1_SetupScript(Coop_EventScript_SelectAction);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 static bool8 StartCB_Save1(void)

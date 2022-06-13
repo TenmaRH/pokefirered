@@ -404,7 +404,7 @@ static const struct MenuAction sScriptMultiChoiceMenu_Mushrooms[] = {
 static const struct MenuAction sScriptMultiChoiceMenu_TradeColosseumBlankCrush[] = {
     { gText_TradeCenter },
     { gText_Colosseum_2 },
-    { gText_Dummy_8417E71 },
+    { gText_Teleport },
     { gText_BerryCrush },
     { gOtherText_Exit }
 };
@@ -412,7 +412,7 @@ static const struct MenuAction sScriptMultiChoiceMenu_TradeColosseumBlankCrush[]
 static const struct MenuAction sScriptMultiChoiceMenu_TradeColosseumBlank[] = {
     { gText_TradeCenter },
     { gText_Colosseum_2 },
-    { gText_Dummy_8417E71 },
+    { gText_Teleport },
     { gOtherText_Exit }
 };
 
@@ -488,6 +488,9 @@ static const struct MenuAction sScriptMultiChoiceMenu_TrainerTowerMode[] = {
     { gOtherText_Exit }
 };
 
+static const struct MenuAction sScriptMultiChoiceMenu_CoopActions[] = {
+    { gText}
+}
 static const struct MenuAction sScriptMultiChoiceMenu_Exit[] = {
     { gOtherText_Exit }
 };
@@ -557,7 +560,7 @@ const struct MultichoiceListStruct gScriptMultiChoiceMenus[] = {
     { sScriptMultiChoiceMenu_SeagallopVermilion, NELEMS(sScriptMultiChoiceMenu_SeagallopVermilion) },
     { sScriptMultiChoiceMenu_62, NELEMS(sScriptMultiChoiceMenu_62) },
     { sScriptMultiChoiceMenu_JoinOrLead, NELEMS(sScriptMultiChoiceMenu_JoinOrLead) },
-    { sScriptMultiChoiceMenu_TrainerTowerMode, NELEMS(sScriptMultiChoiceMenu_TrainerTowerMode) }
+    { sScriptMultiChoiceMenu_TrainerTowerMode, NELEMS(sScriptMultiChoiceMenu_TrainerTowerMode) },
 };
 
 // From Cool to Berries goes unused

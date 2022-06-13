@@ -250,6 +250,17 @@ CableClub_EventScript_SelectBattleMode:: @ 81BB4AE
 	case SCR_MENU_CANCEL, CableClub_EventScript_AbortLink
 	end
 
+Coop_EventScript_SelectAction:: @ Menu when coop is active
+	message Coop_SelectAction_Text
+	waitmessage
+	multichoice 0, 0, MULTICHOICE_TRADE_COLOSSEUM_2, FALSE
+	switch VAR_RESULT
+	case 0, TradeCenter_EventScript_Chair0 @ Trade, should ahve code to send trade request to player 2
+	case 1, BattleColosseum_2P_EventScript_PlayerSpot0 @ Battle, should have code to send battle request to player 2
+	case 2, Coop_TeleportToPlayer @ TODO routine to teleport to other player
+	case 3, CableClub_EventScript_RecordCorner @ just an end command
+	end
+
 CableClub_EventScript_BattleModeInfo:: @ 81BB501
 	msgbox CableClub_Text_ExplainBattleModes
 	goto CableClub_EventScript_SelectBattleMode
@@ -1840,3 +1851,6 @@ CableClub_Text_ExplainWirelessClub:: @ 81BDBF8
 CableClub_Text_HopeYouEnjoyWirelessSystem:: @ 81BDEDF
 	.string "I hope you enjoy the Wireless\n"
 	.string "Communication System.$"
+
+Coop_SelectAction_Text::
+	.string "Select an action.$"

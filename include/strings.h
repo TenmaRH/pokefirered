@@ -793,7 +793,7 @@ extern const u8 gText_Colosseum_2[];
 extern const u8 gText_BerryCrush[];
 extern const u8 gText_Dummy_8417E66[];
 extern const u8 gText_Dummy_8417E67[];
-extern const u8 gText_Dummy_8417E71[];
+extern const u8 gText_Teleport[];
 extern const u8 gText_PokemonJump[];
 extern const u8 gText_DodrioBerryPicking[];
 extern const u8 gText_2Tinymushrooms[];

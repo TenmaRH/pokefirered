@@ -113,5 +113,3 @@ static void LinkAbort()
     CloseLink();
 }
 
-
-
