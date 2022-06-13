@@ -639,7 +639,10 @@ void ProcessRecvCmds(u8 unused)
         case LINKCMD_SEND_HELD_KEYS_2:
             gLinkPartnersHeldKeys[i] = gRecvCmds[i][1];
             break;
+        case LINKCMD_RNG:
+            gRngValue = gRecvCmds[i][1];
         }
+
     }
 }
 
@@ -707,6 +710,9 @@ void BuildSendCmd(u16 command)
         gSendCmd[0] = LINKCMD_SEND_HELD_KEYS_2;
         gSendCmd[1] = gHeldKeyCodeToSend;
         break;
+    case LINKCMD_RNG:
+        gSendCmd[0] = LINKCMD_RNG;
+        gSendCmd[1] = gRngValue;
     }
 }
 
